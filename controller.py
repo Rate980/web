@@ -2,6 +2,7 @@
 
 import flask
 import sys
+import sass
 
 app = flask.Flask(__name__)
 print(*sys.path, sep='\n')
@@ -19,8 +20,18 @@ def ip():
 
 @app.route('/test')
 def test():
-    return '<br>'.join(sys.path)
+    return str(app.debug)
+
+
+@app.route('/scss/<file_name>')
+def get_sass(file_name):
+    if app.debug:
+        style = 'expanded'
+    else:
+        style = 'compressed'
+    return sass.compile(
+        filename=f'aseets/scss/{file_name}', output_style=style)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
