@@ -21,7 +21,7 @@ def ip():
 
 @app.route('/test')
 def test():
-    return str(app.debug)
+    return flask.render_template('test.html.j2')
 
 
 @app.route('/sass/<file_name>')
