@@ -27,10 +27,16 @@ def test():
 def get_sass(file_name):
     if app.debug:
         style = 'expanded'
+        map = True
     else:
         style = 'compressed'
+        map = False
+
     return sass.compile(
-        filename=f'aseets/scss/{file_name}', output_style=style)
+        filename=f'aseets/scss/{file_name}',
+        output_style=style,
+        source_map_embed=map
+    )
 
 
 if __name__ == '__main__':
