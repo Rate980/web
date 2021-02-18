@@ -4,6 +4,7 @@ import flask
 import sys
 import sass
 import io
+from modules import uploader
 
 app = flask.Flask(__name__)
 print(*sys.path, sep='\n')
@@ -44,4 +45,5 @@ def get_sass(file_name):
 
 
 if __name__ == '__main__':
+    app.register_blueprint(uploader.app, url_prefix='/uploader')
     app.run(debug=True)
