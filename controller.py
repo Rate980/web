@@ -3,6 +3,7 @@
 import flask
 import sys
 import sass
+import io
 
 app = flask.Flask(__name__)
 print(*sys.path, sep='\n')
@@ -31,12 +32,15 @@ def get_sass(file_name):
     else:
         style = 'compressed'
         map = False
-
-    return sass.compile(
+    compiled_sass = sass.compile(
         filename=f'aseets/scss/{file_name}',
         output_style=style,
         source_map_embed=map
     )
+
+    return flask.send_file(
+        io.BytesIO(compiled_sass.encode('utf8')),
+        mimetype='text/css')
 
 
 if __name__ == '__main__':
