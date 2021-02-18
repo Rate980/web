@@ -23,7 +23,7 @@ def test():
     return str(app.debug)
 
 
-@app.route('/scss/<file_name>')
+@app.route('/sass/<file_name>')
 def get_sass(file_name):
     if app.debug:
         style = 'expanded'
