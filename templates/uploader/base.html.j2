@@ -3,6 +3,7 @@
   <head>
     {% block head %}
     <meta charset="utf-8">
+    <link rel="stylesheet" href="{{'test/test.scss' | sass}}">
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
@@ -10,7 +11,7 @@
     <header></header>
     <div class="main">
       {% block maincontent %}
-        
+
       {% endblock %}
     </div>
     <footer></footer>

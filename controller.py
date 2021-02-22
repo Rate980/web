@@ -25,8 +25,9 @@ def test():
     return flask.render_template('test.html.j2')
 
 
-@app.route('/sass/<file_name>')
-def get_sass(file_name):
+@app.route('/sass')
+def get_sass():
+    file_name = flask.request.args.get('file')
     if app.debug:
         style = 'expanded'
         map = True
@@ -42,6 +43,11 @@ def get_sass(file_name):
     return flask.send_file(
         io.BytesIO(compiled_sass.encode('utf8')),
         mimetype='text/css')
+
+
+@app.template_filter('sass')
+def url_sass(name):
+    return f'/sass?file={name}'
 
 
 if __name__ == '__main__':
