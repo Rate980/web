@@ -8,11 +8,11 @@ from os.path import dirname, sep
 conn = sqlite3.connect(f'{dirname(__file__ )}{sep}test.db')
 
 
-def set_file(file: io.IOBase, mine: str, delete_date: dt = None) -> str:
+def set_file(fp, mine: str, delete_date: dt = None) -> str:
     id = secrets.randbits(48)
     cur = conn.cursor()
     values = {
-        'id': id, 'file': file.read(),
+        'id': id, 'file': fp.read(),
         'update': dt.now().timestamp(), 'mine': mine}
 
     if delete_date is not None:
@@ -38,5 +38,5 @@ def get_file(id: str) -> tuple[io.BytesIO, str, str]:
         return None, None, None
 
     cur.execute('SELECT file, mine, file_name FROM files WHERE id = ?;', (id,))
-    file = cur.fetchall()[0]
-    return (io.BytesIO(file[0]),) + file[1:]
+    fp = cur.fetchall()[0]
+    return (io.BytesIO(fp[0]),) + fp[1:]
