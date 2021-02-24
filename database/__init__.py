@@ -1,1 +1,1 @@
-from .controldb import set_file, set_file
+from .controldb import set_file, get_file
