@@ -18,7 +18,7 @@ def set_file(fp, mine: str, delete_date: dt = None) -> str:
     if delete_date is not None:
         values += {'deldate': delete_date.timestamp()}
 
-    cur.exevute('''
+    cur.execute('''
     INSERT INTO TREMS (id, file, upload_date, delete_date) VALUES(
       :id,
       :file,
