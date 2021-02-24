@@ -8,13 +8,16 @@ from os.path import dirname, sep
 conn = sqlite3.connect(f'{dirname(__file__ )}{sep}test.db')
 
 
-def set_file(file, delete_date: dt):
+def set_file(file: io.IOBase, mine: str, delete_date: dt = None) -> str:
     id = secrets.randbits(48)
     cur = conn.cursor()
     values = {
-        'id': id, 'file': file.read(), 'update': dt.now().timestamp(),
-        'deldate': delete_date.timestamp()
-    }
+        'id': id, 'file': file.read(),
+        'update': dt.now().timestamp(), 'mine': mine}
+
+    if delete_date is not None:
+        values += {'deldate': delete_date.timestamp()}
+
     cur.exevute('''
     INSERT INTO TREMS (id, file, upload_date, delete_date) VALUES(
       :id,
