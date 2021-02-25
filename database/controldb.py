@@ -39,12 +39,13 @@ def set_file(
     );
     ''', values)
     conn.commit()
-    return base64.urlsafe_b64encode(id.to_bytes(6, 'big'))
+    return base64.urlsafe_b64encode(id.to_bytes(6, 'big')).decode('utf8')
 
 
-def get_file(id: str) -> tuple[io.BytesIO, str, str]:
+def get_file(str_id: str) -> tuple[io.BytesIO, str, str]:
     cur = conn.cursor()
-    id = int.from_bytes(base64.urlsafe_b64decode(id), 'big')
+    byte_id = str_id.encord('utf8')
+    id = int.from_bytes(base64.urlsafe_b64decode(byte_id), 'big')
     cur.execute('SELECT id FROM files')
     if id not in [x[0] for x in cur.fetchall()]:
         return None, None, None
