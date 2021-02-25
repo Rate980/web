@@ -3,5 +3,8 @@
 {% block title %}main{% endblock %}
 
 {% block maincontent %}
-
+  <form action="/uploader/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="uploadFile">
+    <input type="submit" value="submit"/>
+  </form>
 {% endblock %}
