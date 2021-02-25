@@ -13,11 +13,12 @@ def uproder_index():
 
 
 @app.route('/upload', methods=['POST'])
-def uprod():
+def upload():
     print(flask.request.files['uploadFile'])
-    # if flask.request.files != []:
-    #    id = db.set_file(flask.request.files[0])
-    #    return flask.render_template(id=id, server_name=flask.request.url_root
-    # )
-    file = flask.request.files["uploadFile"]
-    return f'{file.mimetype}, {file.filename}'
+    if flask.request.files:
+        id = db.set_file(flask.request.files[uploadFile])
+        return flask.render_template(id=id, server_name=flask.request.url_root)
+
+
+@app.route('/download/<id>')
+def download(id):
