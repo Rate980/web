@@ -9,15 +9,24 @@ conn = sqlite3.connect(f'{dirname(__file__ )}{sep}test.db')
 
 
 def set_file(
-        fp, mine: str, file_name: str = None, delete_date: dt = None) -> str:
+        fp, mine: str = None, file_name: str = None,
+        delete_date: dt = None) -> str:
 
     id = secrets.randbits(48)
     cur = conn.cursor()
     if file_name is None:
         try:
-            file_name = fp.name
+            file_name = fp.filename
         except AttributeError:
-            raise ValueError('file name is not found')
+            try:
+                file_name = fp.name
+            except AttributeError:
+                raise ValueError('file name is not found')
+    if mine is None:
+        try:
+            mine = fp.mimetype
+        except AttributeError:
+            raise ValueError('mine type is not found')
     values = {
         'id': id, 'file': fp.read(),
         'update': dt.now().timestamp(), 'mine': mine,
