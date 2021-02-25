@@ -5,11 +5,13 @@ import io
 from datetime import datetime as dt
 from os.path import dirname, sep
 
+import magic
+
 conn = sqlite3.connect(f'{dirname(__file__ )}{sep}test.db')
 
 
 def set_file(
-        fp, mine: str = None, file_name: str = None,
+        fp, file_name: str = None,
         delete_date: dt = None) -> str:
 
     id = secrets.randbits(48)
@@ -22,11 +24,7 @@ def set_file(
                 file_name = fp.name
             except AttributeError:
                 raise ValueError('file name is not found')
-    if mine is None:
-        try:
-            mine = fp.mimetype
-        except AttributeError:
-            raise ValueError('mine type is not found')
+    mine = magic.from_buffer(fp.read(), mine=True)
     values = {
         'id': id, 'file': fp.read(),
         'update': dt.now().timestamp(), 'mine': mine,
