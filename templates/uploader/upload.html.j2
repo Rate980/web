@@ -3,7 +3,8 @@
 {% block title %}uplord{% endblock %}
 
 {% block maincontent %}
-  <p>
-    <a href="/uploader/dl/{{id}}">{{server_name}}/uploader/dl/{{id}}</a>
-  </p>
+  <a href="/uploader/download/{{id}}">
+    <input type="text" value="{{server_name}}/uploader/download/{{id}}" id="url" readonly>
+  </a>
+  <button onclick="urlCpoy()">copy</button>
 {% endblock %}
