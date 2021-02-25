@@ -34,7 +34,7 @@ def set_file(
       :file,
       :update,
       :deldate,
-      :mine
+      :mine,
       :name
     );
     ''', values)
