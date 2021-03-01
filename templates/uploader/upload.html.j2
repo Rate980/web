@@ -2,9 +2,14 @@
 
 {% block title %}uplord{% endblock %}
 
+{% block head %}
+  {{super()}}
+  <script type="text/javascript" src="/static/js/uplorder.js"></script>
+{% endblock %}
+
 {% block maincontent %}
   <a href="/uploader/download/{{id}}">
-    <input type="text" value="{{server_name}}/uploader/download/{{id}}" id="url" readonly>
+    <input type="text" value="{{server_name}}uploader/download/{{id}}" id="url" readonly>
   </a>
   <button onclick="urlCpoy()">copy</button>
 {% endblock %}

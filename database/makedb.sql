@@ -1,7 +1,7 @@
 CREATE TABLE files(
   id INT primary key,
   file BLOB,
-  mine TEXT,
+  mime TEXT,
   file_name TEXT,
   upload_date REAL,
   delete_date REAL
