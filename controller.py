@@ -2,6 +2,9 @@
 
 import flask
 import sys
+import sass
+import io
+from modules import uploader
 
 app = flask.Flask(__name__)
 print(*sys.path, sep='\n')
@@ -19,8 +22,35 @@ def ip():
 
 @app.route('/test')
 def test():
-    return '<br>'.join(sys.path)
+    print(flask.request.url_root)
+    return 'A'
+
+
+@app.route('/sass')
+def get_sass():
+    file_name = flask.request.args.get('file')
+    if app.debug:
+        style = 'expanded'
+        map = True
+    else:
+        style = 'compressed'
+        map = False
+    compiled_sass = sass.compile(
+        filename=f'aseets/scss/{file_name}',
+        output_style=style,
+        source_map_embed=map
+    )
+
+    return flask.send_file(
+        io.BytesIO(compiled_sass.encode('utf8')),
+        mimetype='text/css')
+
+
+@app.template_filter('sass')
+def url_sass(name):
+    return f'/sass?file={name}'
 
 
 if __name__ == '__main__':
-    app.run()
+    app.register_blueprint(uploader.app, url_prefix='/uploader')
+    app.run(debug=True)

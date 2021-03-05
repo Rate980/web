@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="{{'uploder/master.scss' | sass}}">-->
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <header></header>
+    <div class="main">
+      {% block maincontent %}
+
+      {% endblock %}
+    </div>
+    <footer></footer>
+  </body>
+</html>
